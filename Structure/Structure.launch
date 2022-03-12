@@ -77,5 +77,5 @@
     </listAttribute>
     <stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;/&gt;"/>
     <stringAttribute key="process_factory_id" value="com.st.stm32cube.ide.mcu.debug.launch.HardwareDebugProcessFactory"/>
-    <stringAttribute key="saved_expressions&lt;seperator&gt;Unknown" value="0x2001ffbc,0x2001ffb4,0x2000001c,0x2000002c,0x40023830,0x2000002,cb,0x000000cb,0x00000001"/>
+    <stringAttribute key="saved_expressions&lt;seperator&gt;Unknown" value="0x2001ffbc,0x2001ffb4,0x2000001c,0x2000002c,0x40023830,0x2000002,cb,0x000000cb,0x00000001,s,&amp;s,&amp;RCC_AHB1_t,RCC_AHB1_t"/>
 </launchConfiguration>

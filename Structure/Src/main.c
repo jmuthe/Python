@@ -19,7 +19,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-struct RCC_t{
+ struct RCC_AHB1_s{
 	uint32_t GPIOAEN:1;
 	uint32_t GPIOBEN:1;
 	uint32_t GPIOCEN:1;
@@ -30,11 +30,11 @@ struct RCC_t{
 	uint32_t GPIOHEN:1;
 
 
-};
+}RCC_AHB1_t;
 
-union RCC2_t{
+union {
 
-	struct RCC2_tUnion
+	 struct
 	{
 		uint32_t GPIOAEN:1;
 		uint32_t GPIOBEN:1;
@@ -44,10 +44,10 @@ union RCC2_t{
 		uint32_t GPIOFEN:1;
 		uint32_t GPIOGEN:1;
 		uint32_t GPIOHEN:1;
-	}RCC2_taUnion;
+	}RCC_AHB1_t;
 
-	uint8_t RCC2_structure;
-};
+	uint8_t RCC_AHB1_US;
+}RCC_AHB1_ut;
 
 uint32_t * s;
 
@@ -67,25 +67,46 @@ int main(void)
 
 
 
-	//Reading from RCC_AHB1 register
+	/*****Reading from RCC_AHB1 register******/
+
 	*RCC_AHB1 |=1<<3; //Set GPIOD clock
 	*RCC_AHB1 |=1<<2; //Set GPIOC clock
 	*RCC_AHB1 |=1<<0; //Set GPIOA clock
 
-	struct RCC_t* AHB1a =&s;
-	AHB1a->GPIOAEN= (*RCC_AHB1 & 1<<0)>>0;
-	AHB1a->GPIOBEN= (*RCC_AHB1 & 1<<1)>>1;
-	AHB1a->GPIOCEN= (*RCC_AHB1 & 1<<2)>>2;
-	AHB1a->GPIODEN= (*RCC_AHB1 & 1<<3)>>3;
-	AHB1a->GPIOEEN= (*RCC_AHB1 & 1<<4)>>4;
-	AHB1a->GPIOFEN= (*RCC_AHB1 & 1<<5)>>5;
-	AHB1a->GPIOGEN= (*RCC_AHB1 & 1<<6)>>6;
-	AHB1a->GPIOHEN= (*RCC_AHB1 & 1<<7)>>7;
 
-	//Reading from RCC_AHB1 register using Unions
-	union RCC2_t RCCU;
-	RCCU.RCC2_structure=*RCC_AHB1;
-	//RCCU.RCC2_taUnion=*RCC_AHB1;
+	//The Structure is reading
+	s=*RCC_AHB1;
+	struct RCC_AHB1_s*  RCC_AHB1_t;
+	RCC_AHB1_t=&s;
+
+	//Now the Union is reading
+	RCC_AHB1_ut.RCC_AHB1_US=*RCC_AHB1;
+
+	/**Other way to read.***/
+	*RCC_AHB1 &=~(1<<2); //Reset GPIOC
+	*RCC_AHB1 |=1<<5; //Set GPIOF clock
+
+	//Structure Reads
+	RCC_AHB1_t->GPIOAEN= (*RCC_AHB1 & 1<<0)>>0;
+	RCC_AHB1_t->GPIOBEN= (*RCC_AHB1 & 1<<1)>>1;
+	RCC_AHB1_t->GPIOCEN= (*RCC_AHB1 & 1<<2)>>2;
+	RCC_AHB1_t->GPIODEN= (*RCC_AHB1 & 1<<3)>>3;
+	RCC_AHB1_t->GPIOEEN= (*RCC_AHB1 & 1<<4)>>4;
+	RCC_AHB1_t->GPIOFEN= (*RCC_AHB1 & 1<<5)>>5;
+	RCC_AHB1_t->GPIOGEN= (*RCC_AHB1 & 1<<6)>>6;
+	RCC_AHB1_t->GPIOHEN= (*RCC_AHB1 & 1<<7)>>7;
+
+	//Now I am reading using Unions
+	RCC_AHB1_ut.RCC_AHB1_t.GPIOAEN=(*RCC_AHB1 & 1<<0)>>0;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOBEN=(*RCC_AHB1 & 1<<1)>>1;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOCEN=(*RCC_AHB1 & 1<<2)>>2;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIODEN=(*RCC_AHB1 & 1<<3)>>3;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOEEN=(*RCC_AHB1 & 1<<4)>>4;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOFEN=(*RCC_AHB1 & 1<<5)>>5;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOGEN=(*RCC_AHB1 & 1<<6)>>6;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOHEN=(*RCC_AHB1 & 1<<7)>>7;
+
+
 
 
 	//Writing to RCC_AHB1 register
@@ -94,30 +115,31 @@ int main(void)
 
 
 	//Another way to write to RCC_AHB1 register
-	 AHB1a->GPIOAEN= 1;
-	 AHB1a->GPIOBEN= 0;
-	 AHB1a->GPIOCEN= 0;
-	 AHB1a->GPIODEN= 1;
-	 AHB1a->GPIOEEN= 0;
-	 AHB1a->GPIOFEN= 1;
-	 AHB1a->GPIOGEN= 1;
-	 AHB1a->GPIOHEN= 0;
+	RCC_AHB1_t->GPIOAEN= 1;
+	RCC_AHB1_t->GPIOBEN= 0;
+	RCC_AHB1_t->GPIOCEN= 0;
+	RCC_AHB1_t->GPIODEN= 1;
+	RCC_AHB1_t->GPIOEEN= 0;
+	RCC_AHB1_t->GPIOFEN= 1;
+	RCC_AHB1_t->GPIOGEN= 1;
+	RCC_AHB1_t->GPIOHEN= 0;
 	 *RCC_AHB1=s;
 
 	 //Another way to write to RCC_AHB1 register using unions
-	 RCCU.RCC2_structure=0x93;
-	 *RCC_AHB1=RCCU.RCC2_structure;
+	 RCC_AHB1_ut.RCC_AHB1_US=0x93;
+	 *RCC_AHB1= RCC_AHB1_ut.RCC_AHB1_US;
 
 	 //Another way to write to RCC_AHB1 register using unions
-	 RCCU.RCC2_taUnion.GPIOAEN=1;
-	 RCCU.RCC2_taUnion.GPIOBEN=0;
-	 RCCU.RCC2_taUnion.GPIOCEN=1;
-	 RCCU.RCC2_taUnion.GPIODEN=1;
-	 RCCU.RCC2_taUnion.GPIOEEN=0;
-	 RCCU.RCC2_taUnion.GPIOFEN=1;
-	 RCCU.RCC2_taUnion.GPIOGEN=1;
-	 RCCU.RCC2_taUnion.GPIOHEN=0;
-	 *RCC_AHB1=RCCU.RCC2_structure;
+
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOAEN=1;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOBEN=0;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOCEN=1;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIODEN=1;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOEEN=0;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOFEN=1;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOGEN=1;
+	 RCC_AHB1_ut.RCC_AHB1_t.GPIOHEN=0;
+	 *RCC_AHB1=RCC_AHB1_ut.RCC_AHB1_US;
 
 
 
