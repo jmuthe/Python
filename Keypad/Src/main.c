@@ -37,6 +37,7 @@
 int main(void)
 {
 
+	initialise_monitor_handles();
 	rcc_ahb1_t* 	p_rcc_ahb1=(rcc_ahb1_t*) RCC_AHB1;
 	gpiox_moder_t * p_gpioa_moder = (gpiox_moder_t * )GPIOA_MODER;
 	gpiox_moder_t * p_gpiod_moder = (gpiox_moder_t * )GPIOD_MODER;
@@ -82,26 +83,30 @@ int main(void)
 	p_gpiod_odr->odr0=0;
 	if (p_gpiod_idr->idr8==0)
 	{
-		for (uint32_t i=0; i<10000; i++);
+		for (uint32_t i=0; i<1000000; i++);
 		key='1';
+		printf("%c\n",key);
 	}
 	if (p_gpiod_idr->idr9==0)
 		{
-			for (uint32_t i=0; i<10000; i++);
+			for (uint32_t i=0; i<1000000; i++);
 			key='2';
+			printf("%c\n",key);
 		}
 
 	if (p_gpiod_idr->idr10==0)
 			{
-				for (uint32_t i=0; i<10000; i++);
+				for (uint32_t i=0; i<1000000; i++);
 				key='3';
+				printf("%c\n",key);
 			}
 
 
 	if (p_gpiod_idr->idr11==0)
 			{
-				for (uint32_t i=0; i<10000; i++);
+				for (uint32_t i=0; i<1000000; i++);
 				key='A';
+				printf("%c\n",key);
 			}
 
 	//Make R2 low
@@ -112,26 +117,30 @@ int main(void)
 	p_gpiod_odr->odr1=0;
 		if (p_gpiod_idr->idr8==0)
 		{
-			for (uint32_t i=0; i<10000; i++);
+			for (uint32_t i=0; i<1000000; i++);
 			key='4';
+			printf("%c\n",key);
 		}
 		if (p_gpiod_idr->idr9==0)
 			{
-				for (uint32_t i=0; i<10000; i++);
+				for (uint32_t i=0; i<1000000; i++);
 				key='5';
+				printf("%c\n",key);
 			}
 
 		if (p_gpiod_idr->idr10==0)
 				{
-					for (uint32_t i=0; i<10000; i++);
+					for (uint32_t i=0; i<1000000; i++);
 					key='6';
+					printf("%c\n",key);
 				}
 
 
 		if (p_gpiod_idr->idr11==0)
 				{
-					for (uint32_t i=0; i<10000; i++);
+					for (uint32_t i=0; i<1000000; i++);
 					key='B';
+					printf("%c\n",key);
 				}
 
 
@@ -143,26 +152,30 @@ int main(void)
 	p_gpiod_odr->odr2=0;
 		if (p_gpiod_idr->idr8==0)
 		{
-			for (uint32_t i=0; i<10000; i++);
+			for (uint32_t i=0; i<1000000; i++);
 			key='7';
+			printf("%c\n",key);
 		}
 		if (p_gpiod_idr->idr9==0)
 			{
-				for (uint32_t i=0; i<10000; i++);
+				for (uint32_t i=0; i<1000000; i++);
 				key='8';
+				printf("%c\n",key);
 			}
 
 		if (p_gpiod_idr->idr10==0)
 				{
-					for (uint32_t i=0; i<10000; i++);
+					for (uint32_t i=0; i<1000000; i++);
 					key='9';
+					printf("%c\n",key);
 				}
 
 
 		if (p_gpiod_idr->idr11==0)
 				{
-					for (uint32_t i=0; i<10000; i++);
+					for (uint32_t i=0; i<1000000; i++);
 					key='C';
+					printf("%c\n",key);
 				}
 
 
@@ -174,30 +187,33 @@ int main(void)
 		p_gpiod_odr->odr3=0;
 			if (p_gpiod_idr->idr8==0)
 			{
-				for (uint32_t i=0; i<10000; i++);
+				for (uint32_t i=0; i<1000000; i++);
 				key='*';
+				printf("%c\n",key);
 			}
 			if (p_gpiod_idr->idr9==0)
 				{
-					for (uint32_t i=0; i<10000; i++);
+					for (uint32_t i=0; i<1000000; i++);
 					key='0';
+					printf("%c\n",key);
 				}
 
 			if (p_gpiod_idr->idr10==0)
 					{
-						for (uint32_t i=0; i<10000; i++);
+						for (uint32_t i=0; i<1000000; i++);
 						key='#';
+						printf("%c\n",key);
 					}
 
 
 			if (p_gpiod_idr->idr11==0)
 					{
-						for (uint32_t i=0; i<10000; i++);
+						for (uint32_t i=0; i<1000000; i++);
 						key='D';
+						printf("%c\n",key);
 					}
 
 
-
 	}
 
 
@@ -206,30 +222,5 @@ int main(void)
 
 
 
-	/*while(1)
-	{
-		if (p_gpioa_idr->idr0==0)  //If PA0 is low
-		{
-			p_gpiod_odr->odr13 =1;   //Make PD13 high
-			p_gpiod_odr->odr12=0;    //Make PD12 low
-			for (uint32_t i=0; i<1000000; i++);
-			p_gpiod_odr->odr13 =0;  //Make PD13 low
-			p_gpiod_odr->odr12=1;	//Make PD13 low
-			for (uint32_t i=0; i<1000000; i++);
-		}
-		else
-		{
-			p_gpiod_odr->odr13 =1;//Make PD13 high
-			p_gpiod_odr->odr12=0;//Make PD12 low
 
-			for (uint32_t i=0; i<100000; i++);
-			p_gpiod_odr->odr13 =0;//Make PD13 low
-			p_gpiod_odr->odr12=1;//Make PD12 high
-			for (uint32_t i=0; i<100000; i++);
-		}
-
-
-
-	}
-*/
 }
